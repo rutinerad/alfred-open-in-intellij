@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>connections</key>
+	<dict>
+		<key>A6ECD87F-67E0-46F3-A214-14F5F06A48EC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8057FCA5-3F5E-4992-9AEB-18981B7582AC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Samuel Lindblom</string>
+	<key>description</key>
+	<string></string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Open in IntelliJ IDEA</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsmulti</key>
+				<false/>
+				<key>filetypes</key>
+				<array>
+					<string>public.folder</string>
+				</array>
+				<key>name</key>
+				<string>Open in IntelliJ IDEA</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.action</string>
+			<key>uid</key>
+			<string>A6ECD87F-67E0-46F3-A214-14F5F06A48EC</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string># check for where the latest version of IDEA is installed
+IDEA=`ls -1d /Applications/IntelliJ\ * | tail -n1`
+wd=`pwd`
+ 
+# were we given a directory?
+if [ -d "{query}" ]; then
+#  echo "checking for things in the working dir given"
+  wd=`ls -1d "{query}" | head -n1`
+fi
+ 
+# were we given a file?
+if [ -f "{query}" ]; then
+#  echo "opening '{query}'"
+  open -a "$IDEA" "{query}"
+else
+    # let's check for stuff in our working directory.
+    pushd $wd &gt; /dev/null
+ 
+    # does our working dir have an .idea directory?
+    if [ -d ".idea" ]; then
+#      echo "opening via the .idea dir"
+      open -a "$IDEA" .
+ 
+    # is there an IDEA project file?
+    elif [ -f *.ipr ]; then
+#      echo "opening via the project file"
+      open -a "$IDEA" `ls -1d *.ipr | head -n1`
+ 
+    # Is there a pom.xml?
+    elif [ -f pom.xml ]; then
+#      echo "importing from pom"
+      open -a "$IDEA" "pom.xml"
+ 
+    # can't do anything smart; just open IDEA
+    else
+#      echo 'cbf'
+      open "$IDEA"
+    fi
+ 
+    popd &gt; /dev/null
+fi</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>8057FCA5-3F5E-4992-9AEB-18981B7582AC</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>8057FCA5-3F5E-4992-9AEB-18981B7582AC</key>
+		<dict>
+			<key>ypos</key>
+			<real>50</real>
+		</dict>
+		<key>A6ECD87F-67E0-46F3-A214-14F5F06A48EC</key>
+		<dict>
+			<key>ypos</key>
+			<real>50</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://www.rutinerad.com</string>
+</dict>
+</plist>
